@@ -1,4 +1,4 @@
-const task = require("../models/task")
+const taskSchema = require("../models/task")
 
 
 function getAllTasks (req,res) {
@@ -10,8 +10,12 @@ function getTask (req,res) {
 }
 
 async function createTask (req,res) {
-   const Task = await task.create(req.body)
-    res.status(201).json({Task})
+    try {
+        const Task = await taskSchema.create(req.body)
+         res.status(201).json({Task})
+    } catch (error) {
+        res.status(500).json({message: error})
+    }
 }
 
 function updateTask (req,res) {
