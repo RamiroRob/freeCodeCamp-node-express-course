@@ -1,11 +1,11 @@
 const mongoose = require("mongoose")
 
-const connectionString = "mongodb+srv://taskManager-api:Mozart0906@taskmanagernodeexpress.q7euu1k.mongodb.net/TASK_MANAGER?retryWrites=true&w=majority"
+
 
 const connectDB = (url) => {
 
     mongoose
-    .connect(connectionString, { //deprecated in mongoose v6
+    .connect(url, { //deprecated in mongoose v6
         useNewUrlParser: true,
         useCreateIndex: true,
         useFindAndModify: false,
