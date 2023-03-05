@@ -35,25 +35,42 @@ async function createTask(req, res) {
     }
 }
 
-function updateTask(req, res) {
-    res.send("update task")
-}
 
 async function deleteTask(req, res) {
     try {
-       const { id: taskID } = req.params 
-       const task = await taskSchema.findOneAndDelete({_id: taskID})
-
-       if(!task) return res.status(404).json({msg: `task with id ${taskID} doesn't exist`})
-
-       res.status(200).json({task})
+        const { id: taskID } = req.params 
+        const task = await taskSchema.findOneAndDelete({_id: taskID})
+        
+        if(!task) return res.status(404).json({msg: `task with id ${taskID} doesn't exist`})
+        
+        res.status(200).json({task})
     } catch (error) {
         res.status(500).json({ message: error })
-
+        
     }
     
 }
 
+async function updateTask(req, res) {
+
+    try {
+        const { id: taskID } = req.params
+
+        const task = await taskSchema.findOneAndUpdate({_id:taskID}, req.body, {
+            new: true, runValidators: true,
+        })
+
+        if(!task) return res.status(404).json({msg: `task with id ${taskID} doesn't exist`})
+
+        res.status(200).json({ task })
+        
+    } catch (error) {
+        res.status(500).json({ message: error })
+
+    }
+
+   
+}
 
 module.exports = {
     getAllTasks,
